@@ -31,22 +31,21 @@ function with_jquery(f) {
 };
 
 
-
 with_jquery(function($) {
-	if ( document.location.host.indexOf("area51.") == -1 ) {
-		if ( document.location.host.indexOf("meta.") == 0 ) {
-			$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host.slice(5) + "'>chat</a>");
-			$(".topbar-menu-links").prepend("<a href='http://" + document.location.host.slice(5) + "'>main</a>");
-		} else {
-			$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host + "'>chat</a>");
-			$(".topbar-menu-links").prepend("<a href='http://meta." + document.location.host + "'>meta</a>");
-		}
-	} else {
-		$(".topbar-menu-links").prepend("<a href='http://chat.stackexchange.com'>chat</a>");
-		if ( document.location.host.indexOf("discuss.") == 0 ) {
-			$(".topbar-menu-links").prepend("<a href='http://" + document.location.host.slice(8) + "'>main</a>");
-		} else {
-			$(".topbar-menu-links").prepend("<a href='http://discuss." + document.location.host + "'>discuss</a>");
-		}
-	}
+	var chatLink = $('.related-links > a:contains("chat")');
+	$(".topbar-menu-links").prepend(chatLink);
+	
+	var twinSite = $('.current-site .site-link:not(".current-site-link, [href*="careers"]")');
+	var twinSiteUrl = twinSite.attr('href');
+	var twinSiteText = twinSite.text();
+	
+	// Doing a XOR.
+	var hasMeta = twinSiteText.indexOf("Meta") > -1 ? 1 : 0;
+	var hasDiscussions = twinSiteText.indexOf("Discussions") > -1 ? 1 : 0;
+	var mainOrMeta = hasMeta ^ hasDiscussions ? "meta" : "main";
+	
+	$(".topbar-menu-links")
+		.prepend($('<a>')
+			.attr('href', twinSiteUrl)
+			.html(mainOrMeta));
 });
