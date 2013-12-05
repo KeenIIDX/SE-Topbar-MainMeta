@@ -33,10 +33,19 @@ function with_jquery(f) {
 
 
 with_jquery(function($) {
-	$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host + "'>chat</a>");
-	if ( document.location.host.indexOf("meta.") == 0 ) {
-		$(".topbar-menu-links").prepend("<a href='http://" + document.location.host.slice(5) + "'>main</a>");
+	if ( document.location.host.indexOf("area51.") == -1 ) {
+		$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host + "'>chat</a>");
+		if ( document.location.host.indexOf("meta.") == 0 ) {
+			$(".topbar-menu-links").prepend("<a href='http://" + document.location.host.slice(5) + "'>main</a>");
+		} else {
+			$(".topbar-menu-links").prepend("<a href='http://meta." + document.location.host + "'>meta</a>");
+		}
 	} else {
-		$(".topbar-menu-links").prepend("<a href='http://meta." + document.location.host + "'>meta</a>");
+		$(".topbar-menu-links").prepend("<a href='http://chat.stackexchange.com'>chat</a>");
+		if ( document.location.host.indexOf("discuss.") == 0 ) {
+			$(".topbar-menu-links").prepend("<a href='http://" + document.location.host.slice(8) + "'>main</a>");
+		} else {
+			$(".topbar-menu-links").prepend("<a href='http://discuss." + document.location.host + "'>discuss</a>");
+		}
 	}
 });
