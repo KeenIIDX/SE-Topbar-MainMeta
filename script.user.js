@@ -34,10 +34,11 @@ function with_jquery(f) {
 
 with_jquery(function($) {
 	if ( document.location.host.indexOf("area51.") == -1 ) {
-		$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host + "'>chat</a>");
 		if ( document.location.host.indexOf("meta.") == 0 ) {
+			$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host.slice(5) + "'>chat</a>");
 			$(".topbar-menu-links").prepend("<a href='http://" + document.location.host.slice(5) + "'>main</a>");
 		} else {
+			$(".topbar-menu-links").prepend("<a href='http://chat." + document.location.host + "'>chat</a>");
 			$(".topbar-menu-links").prepend("<a href='http://meta." + document.location.host + "'>meta</a>");
 		}
 	} else {
