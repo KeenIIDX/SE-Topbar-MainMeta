@@ -20,6 +20,7 @@
 // @include http://meta.mathoverflow.net/*
 // @include http://discuss.area51.stackexchange.com/*
 // @exclude http://chat./
+// @grant none
 
 
 // ==/UserScript==
@@ -39,10 +40,9 @@ with_jquery(function($) {
 	var twinSiteUrl = twinSite.attr('href');
 	var twinSiteText = twinSite.text();
 	
-	// Doing a XOR.
-	var hasMeta = twinSiteText.indexOf("Meta") > -1 ? 1 : 0;
-	var hasDiscussions = twinSiteText.indexOf("Discussions") > -1 ? 1 : 0;
-	var mainOrMeta = hasMeta ^ hasDiscussions ? "meta" : "main";
+	var hasMeta = twinSiteText.indexOf("Meta") > -1 ? true : false;
+	var hasDiscussions = twinSiteText.indexOf("Discussions") > -1 ? true : false;
+	var mainOrMeta = hasMeta || hasDiscussions ? "meta" : "main";
 	
 	$(".topbar-menu-links")
 		.prepend($('<a>')
